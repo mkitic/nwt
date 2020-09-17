@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
+import person from './components/person/Person';
 import Person from './components/person/Person';
 
 
 class App extends Component {
   state= {
     persons: [
-      {name: 'Max', age: 28},
-      {name: 'MAnu', age: 29}, 
-      {name: 'Stef', age: 20}
+      {id: 'asda',  name: 'Max', age: 28},
+      {id: 'vsvs', name: 'MAnu', age: 29}, 
+      {id: 'mnsa', name: 'Stef', age: 20}
     ],
     otherState:'some other value',
     showPersons: false
 
   }
 
-  switchNameHandler= (newName) =>{
+  /*switchNameHandler= (newName) =>{
    // console.log('did ut click');
    //this.state.persons[0].name= 'Melani'; --> NE OVO RADIT, NE SMI SE MINJAT OVAKO
    this.setState({persons:[
@@ -25,14 +26,31 @@ class App extends Component {
     ] })
 
   }
+*/
+  nameChangedHandler= (event, id) => {
+ //da radimo sa kopijom a ne oriinalom 
+    const personIndex= this.state.persons.findIndex(p=> {
+      return p.id=== id;
+    });
 
-  nameChangedHandler= (event) => {
-    this.setState({persons:[
-      {name: 'Max', age: 28},
-      {name: event.target.value, age: 29}, 
-      {name: 'Stef', age: 52}
-    ] })
+    const person= {
+      ...this.state.persons[personIndex]
+    };
+    //ili    const person= Object.assign({}, this.state.persons[personIndex]) ;
 
+    person.name= event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex]= person;
+
+    this.setState({persons:persons })
+  }
+
+  deletePersonHandler=(personIndex) => {
+    //const persons =this.state.persons.slice();
+    const persons=[...this.state.persons]; 
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
 
   }
 
@@ -52,6 +70,26 @@ class App extends Component {
 
     };
 
+    let persons =null;
+
+    if (this.state.showPersons){
+      persons = (
+        <div>
+         {this.state.persons.map((person, index) => { 
+           return <Person 
+            click = { ()=> this.deletePersonHandler(index)}   
+            name={person.name}
+            age= {person.age}
+            key={person.id}
+            changed={(event)=>this.nameChangedHandler(event, person.id)}
+            />
+
+       })}
+       </div>
+
+      );
+    }
+
   return (
     <div className="App">
      <h1> Hi Im  a react app</h1>
@@ -62,7 +100,20 @@ class App extends Component {
         Switch Name
     </button>
      
-     {
+        
+    {persons} 
+         
+    </div>
+    
+  );
+   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null,'Does dis work' ));
+}
+}
+export default App;
+
+
+/*
+{
       this.state.showPersons ?      //pokazuje da li je true or fals u boole,kao da je if f-ja, ako je tocno onda se ulazi dole za div
        <div > 
        
@@ -84,14 +135,10 @@ class App extends Component {
         </div>: null             //ako je false onda ne vracaj nista
       }
 
-     
-    </div>
-    
-  );
-   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null,'Does dis work' ));
-}
-}
-export default App;
+
+*/
+
+
 
 
 //onClick={()=> this.switchNameHandler('MAx2')}>Switch Name
