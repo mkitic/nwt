@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import person from './components/person/Person';
+import styled from 'styled-components'
+//import Radium, {StyleRoot} from 'radium'
+//import person from './components/person/Person';
 import Person from './components/person/Person';
 
 
@@ -67,8 +69,11 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
-
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     let persons =null;
@@ -90,6 +95,10 @@ class App extends Component {
       );
 
       style.backgroundColor= 'red';
+      style[':hover']= {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
 
     //let classes = ['red', 'bold'].join(' '); 
@@ -103,6 +112,7 @@ class App extends Component {
     }
 
   return (
+    
     <div className="App">
      <h1> Hi Im  a react app</h1>
      <p className={classes.join(' ')}> It works</p>
@@ -115,13 +125,13 @@ class App extends Component {
     {persons} 
          
     </div>
-    
+   
   );
    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null,'Does dis work' ));
 }
 }
+//export default Radium(App);
 export default App;
-
 
 /*
 {
