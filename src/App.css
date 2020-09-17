@@ -1,6 +1,21 @@
 .App {
   text-align: center;
 }
+
+
+.red {
+  color: red;
+
+}
+
+.bold {
+  font-weight: bold;
+}
+
+
+
+
+
 /*
 .App-header {
   background-color: #282c34;
